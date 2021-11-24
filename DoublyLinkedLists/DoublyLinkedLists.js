@@ -22,7 +22,6 @@ class DoublyLinkedList {
     }
   }
 
-
   addToTail(data) {
     const newTail = new Node(data);
     const currentTail = this.tail;
@@ -36,19 +35,34 @@ class DoublyLinkedList {
     }
   }
 
-  removeHead() {
-    const removedHead = this.head;
-    if (!removedHead) {
+  removeTail() {
+    const removedTail = this.tail;
+    if (!removedTail) {
       return;
     }
-    this.head = removedHead.getNextNode();
-    if (this.head) {
-      this.head.setPreviousNode(null);
+    this.tail = removedTail.getPreviousNode();
+    if (this.tail) {
+      this.tail.setNextNode(null);
     }
-    if (removedHead === this.tail) {
-      this.removeTail();
+    if (removedTail === this.head) {
+      this.removeHead();
     }
-    return removedHead.data;
+    return removedTail.data;
+  }
+
+  removeByData(data) {
+    let nodeToRemove;
+    let currentNode = this.head;
+    while (currentNode !== null) {
+      if (currentNode.data === data) {
+        nodeToRemove = currentNode;
+        break;
+      }
+      currentNode = currentNode.getNextNode();
+    }
+    if (!nodeToRemove) {
+      return null;
+    }
   }
 
   printList() {
